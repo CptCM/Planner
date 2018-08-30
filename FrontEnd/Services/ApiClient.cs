@@ -122,5 +122,45 @@ namespace FrontEnd.Services
 
             return await response.Content.ReadAsJsonAsync<List<SearchResult>>();
         }
+
+        public async Task<List<SessionResponse>> GetSessionsByAttendeeAsync(string name)
+        {
+
+            // TODO: would be better to add a backend api!
+
+            var sessionsTask = GetSessionsAsync();
+            var attendeeTask = GetAttendeeAsync(name);
+
+            await Task.WhenAll(sessionsTask, attendeeTask);
+
+            var sessions = await sessionsTask;
+            var attendee = await attendeeTask;
+
+            if (attendee == null)
+            {
+                return new List<SessionResponse>();
+            }
+
+            var sessionIds = attendee.Sessions.Select(s => s.ID);
+
+            sessions.RemoveAll(s => !sessionIds.Contains(s.ID));
+
+            return sessions;
+        }
+
+
+        public async Task AddSessionToAttendeeAsync(string name, int sessionID)
+        {
+            var response = await _httpClient.PostAsync($"/api/attendees/{name}/session/{sessionID}", null);
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task RemoveSessionFromAttendeeAsync(string name, int sessionID)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/attendees/{name}/session/{sessionID}");
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

@@ -13,4 +13,7 @@ public interface IApiClient
     Task AddAttendeeAsync(Attendee attendee);
     Task<AttendeeResponse> GetAttendeeAsync(string name);
     Task DeleteSessionAsync(int id);
+    Task<List<SessionResponse>> GetSessionsByAttendeeAsync(string name);
+    Task AddSessionToAttendeeAsync(string name, int sessionID);
+    Task RemoveSessionFromAttendeeAsync(string name, int sessionID);
 }

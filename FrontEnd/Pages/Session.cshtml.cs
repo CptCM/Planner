@@ -23,7 +23,7 @@ namespace FrontEnd.Pages
         }
 
         public SessionResponse Session { get; set; }
-
+        public bool  IsInPersonalAgenda { get; set; }
         public int? DayOffset { get; set; }
 
         public async Task<IActionResult> OnGet(int id)
@@ -47,7 +47,25 @@ namespace FrontEnd.Pages
                 Session.Abstract = "<p>" + String.Join("</p><p>", encodedAbstract.Split(encodedCrLf, StringSplitOptions.RemoveEmptyEntries)) + "</p>";
             }
 
+            var sessions = await _apiClient.GetSessionsByAttendeeAsync(User.Identity.Name);
+
+            IsInPersonalAgenda = sessions.Any(s => s.ID == id);
+
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int sessionId)
+        {
+            await _apiClient.AddSessionToAttendeeAsync(User.Identity.Name, sessionId);
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostRemoveAsync(int sessionId)
+        {
+            await _apiClient.RemoveSessionFromAttendeeAsync(User.Identity.Name, sessionId);
+
+            return RedirectToPage();
         }
     }
 }

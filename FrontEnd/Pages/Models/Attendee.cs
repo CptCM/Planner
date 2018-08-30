@@ -17,6 +17,6 @@ namespace FrontEnd.Pages.Models
 
         [DisplayName("Email address")]
         [DataType(DataType.EmailAddress)]
-        public override string EmailAddress { get => base.EmailAddress; set => EmailAddress = value; }
+        public override string EmailAddress { get => base.EmailAddress; set => base.EmailAddress = value; }
     }
 }
