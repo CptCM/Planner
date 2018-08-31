@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FrontEnd.Filters;
 
 namespace FrontEnd
 {
@@ -26,11 +27,14 @@ namespace FrontEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                    .AddRazorPagesOptions(options =>
-                    {
-                        options.Conventions.AuthorizeFolder("/admin", "Admin");
-                    });
+            services.AddMvc(options =>
+                {
+                    options.Filters.AddService<RequireLoginFilter>();
+                })
+                .AddRazorPagesOptions(options =>
+                {
+                options.Conventions.AuthorizeFolder("/admin", "Admin");
+                });
 
             var authBuilder = services
                 .AddAuthentication(options =>
@@ -72,6 +76,7 @@ namespace FrontEnd
             };
             services.AddSingleton(httpClient);
             services.AddSingleton<IApiClient, ApiClient>();
+            services.AddTransient<RequireLoginFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
