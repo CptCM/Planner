@@ -2,11 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26606.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackEnd", "BackEnd\BackEnd.csproj", "{D66C6E3E-6B19-4346-8C6E-E4E777F923D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEnd", "BackEnd\BackEnd.csproj", "{D66C6E3E-6B19-4346-8C6E-E4E777F923D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConferenceDTO", "ConferenceDTO\ConferenceDTO.csproj", "{7DD4258F-0BDC-4A2D-B23C-7D9EF0AF53E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{A469FEEE-23AA-465D-9EA9-5BC08DBD0E8A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4E753789-CB82-40D7-9556-5BED4B14C54E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,8 +56,23 @@ Global
 		{A469FEEE-23AA-465D-9EA9-5BC08DBD0E8A}.Release|x64.Build.0 = Release|Any CPU
 		{A469FEEE-23AA-465D-9EA9-5BC08DBD0E8A}.Release|x86.ActiveCfg = Release|Any CPU
 		{A469FEEE-23AA-465D-9EA9-5BC08DBD0E8A}.Release|x86.Build.0 = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|x64.Build.0 = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Debug|x86.Build.0 = Debug|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|x64.ActiveCfg = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|x64.Build.0 = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E753789-CB82-40D7-9556-5BED4B14C54E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A85679F-C2C9-4848-8486-C705454B74FB}
 	EndGlobalSection
 EndGlobal

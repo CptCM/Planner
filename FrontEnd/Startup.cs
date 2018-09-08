@@ -77,6 +77,7 @@ namespace FrontEnd
             services.AddSingleton(httpClient);
             services.AddSingleton<IApiClient, ApiClient>();
             services.AddTransient<RequireLoginFilter>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,11 +90,13 @@ namespace FrontEnd
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {
