@@ -15,7 +15,8 @@
     <em><a asp-page="Speaker" asp-route-id="@speaker.ID">@speaker.Name</a></em>
 }
 
-<p>@Html.Raw(Model.Session.Abstract)</p>  
+><p>@Html.Raw(Model.Session.Abstract)</p>  
+
 
 <form method="post">
     <input type="hidden" name="sessionId" value="@Model.Session.ID" />
