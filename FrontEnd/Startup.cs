@@ -7,6 +7,8 @@ using System.Net.Http;
 using FrontEnd.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using FrontEnd.Filters;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace FrontEnd
 {
@@ -22,39 +24,32 @@ namespace FrontEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-                {
-                    options.Filters.AddService<RequireLoginFilter>();
-                })
+            services.AddMvc(options => options.Filters.AddService<RequireLoginFilter>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>
                 {
-                options.Conventions.AuthorizeFolder("/admin", "Admin");
+                    options.Conventions.AuthorizeFolder("/admin", "Admin");
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                    options.AllowAreas = true;
                 });
 
-            var authBuilder = services
-                .AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Login";
-                    options.AccessDeniedPath = "/Denied";
-                });
+            //var authBuilder = services
+            //    .AddAuthentication(options =>
+            //    {
+            //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = $"/Identity/Account/Login";
+            //        options.LogoutPath = $"/Identity/Account/Logout";
+            //        options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            //    });
 
-            var twitterConfig = Configuration.GetSection("twitter");
-            if (twitterConfig["consumerKey"] != null)
-            {
-                authBuilder.AddTwitter(options => twitterConfig.Bind(options));
-            }
 
-            var googleConfig = Configuration.GetSection("google");
-            if (googleConfig["clientID"] != null)
-            {
-                authBuilder.AddGoogle(options => googleConfig.Bind(options));
-            }
+
 
             services.AddAuthorization(options =>
             {
@@ -84,9 +79,14 @@ namespace FrontEnd
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseStaticFiles();
+<<<<<<< HEAD
+=======
+            app.UseHttpsRedirection();
+>>>>>>> da47c9fa4eaf0da2d154e132e4804c210b667967
             app.UseAuthentication();
             app.UseMvc(routes =>
             {
