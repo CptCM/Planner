@@ -6,16 +6,19 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ConferenceDTO;
 using FrontEnd.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace FrontEnd.Services
 {
     public class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger<ApiClient> _logger;
 
-        public ApiClient(HttpClient httpClient)
+        public ApiClient(HttpClient httpClient, ILogger<ApiClient> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task AddAttendeeAsync(Attendee attendee)
@@ -61,7 +64,7 @@ namespace FrontEnd.Services
         public async Task<List<SessionResponse>> GetSessionsAsync()
         {
             var response = await _httpClient.GetAsync("/api/sessions");
-
+            _logger.LogInformation("Getting All Sessions......");
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsJsonAsync<List<SessionResponse>>();
